@@ -1,5 +1,5 @@
 {
-  "name": "chakraui-react-next-typescript-jest-eslint-starter",
+  "name": "momentum-modular",
   "private": true,
   "scripts": {
     "dev": "next",
