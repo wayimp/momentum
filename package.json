@@ -14,7 +14,6 @@
     "test": "NODE_ENV=test jest",
     "typecheck": "tsc --noEmit",
     "clean": "rimraf out/",
-    "prepare": "is-ci || husky install",
     "commit": "cz"
   },
   "dependencies": {
@@ -58,7 +57,6 @@
     "eslint-plugin-simple-import-sort": "^9.0.0",
     "eslint-plugin-sonarjs": "^0.18.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "husky": "^8.0.3",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "lint-staged": "^13.1.0",
