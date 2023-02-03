@@ -41,7 +41,7 @@ export default function Simple() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.800')} sx={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}>
+    <Box bg={useColorModeValue('gray.100', 'gray.800')} sx={{ position: '-webkit-sticky', top: '0', }}>
       <Flex as="header" position="static" backgroundColor="rgba(26, 26, 26, 0.8)" backdropFilter="saturate(180%) blur(5px)" w="100vw" h="10vh" alignItems={'center'} justifyContent={'space-between'}>
 
         <IconButton
