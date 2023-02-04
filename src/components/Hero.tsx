@@ -72,7 +72,7 @@ export default function WithBackgroundImage() {
     <Flex
       w="100vw"
       h="90vh"
-      backgroundImage="images/tiny1.png"
+      backgroundImage="images/big1.jpg"
       backgroundSize="cover"
       backgroundPosition="center center">
       <VStack
