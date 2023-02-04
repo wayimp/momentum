@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import Header from 'src/components/Header'
 import Hero from 'src/components/Hero'
+import Interior from 'src/components/Interior'
 
 import { APP_NAME } from '@/config'
 
@@ -17,6 +18,9 @@ const Home: NextPage = () => (
     <Header />
 
     <Hero />
+
+    <Interior />
+
 
   </>
 )
