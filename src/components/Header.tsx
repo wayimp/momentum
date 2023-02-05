@@ -1,4 +1,6 @@
 import { ReactNode } from 'react';
+import { APP_NAME } from '@/config'
+import Head from 'next/head'
 import {
   Box,
   Flex,
@@ -20,21 +22,19 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 
-const Links = ['Home', 'About', 'Contact'];
-
-const NavLink = ({ children }: { children: ReactNode }) => (
+const NavLink = ({ label, dest }: any) => (
   <Link
     px={2}
     py={1}
     maxWidth={24}
-    bg={ useColorModeValue('gray.100', 'gray.800')}
+    bg={useColorModeValue('gray.100', 'gray.800')}
     rounded={'md'}
     _hover={{
       textDecoration: 'none',
       bg: useColorModeValue('gray.300', 'gray.600'),
     }}
-    href={'#'}>
-    {children}
+    href={dest}>
+    {label}
   </Link>
 );
 
@@ -60,18 +60,20 @@ export default function withAction() {
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+
+              <NavLink label="Home" dest="/" />
+              <NavLink label="About" dest="/about" />
+              <NavLink label="Contact" dest="/contact" />
+
             </HStack>
           </HStack>
         </Flex>
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+              <NavLink label="Home" dest="/" />
+              <NavLink label="About" dest="/about" />
+              <NavLink label="Contact" dest="/contact" />
             </Stack>
           </Box>
         ) : null}
