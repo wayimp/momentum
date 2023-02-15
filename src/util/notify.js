@@ -1,15 +1,18 @@
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
 
-let emailService, emailUser, emailPass
-if (process.env.emailService) {
-    emailService = process.env.EMAIL_SERVICE
+let emailFrom, emailHost, emailUser, emailPass
+
+if (process.env.EMAIL_HOST) {
+    emailFrom = process.env.EMAIL_FROM
+    emailHost = process.env.EMAIL_HOST
     emailUser = process.env.EMAIL_USER
     emailPass = process.env.EMAIL_PASS
 } else {
     // Load the config if it has not been done
     const env = dotenv.config()
-    emailService = env.parsed.EMAIL_SERVICE
+    emailFrom = env.parsed.EMAIL_FROM
+    emailHost = env.parsed.EMAIL_HOST
     emailUser = env.parsed.EMAIL_USER
     emailPass = env.parsed.EMAIL_PASS
 }
@@ -21,15 +24,21 @@ const validate = (email) => {
 
 const email = (to, subject, text) => {
     var transporter = nodemailer.createTransport({
-        service: emailService,
+        host: emailHost,
+        port: 465,
+        secure: true, // use TLS
         auth: {
             user: emailUser,
             pass: emailPass
+        },
+        tls: {
+            // do not fail on invalid certs
+            rejectUnauthorized: false
         }
     })
 
     var mailOptions = {
-        from: emailUser,
+        from: emailFrom,
         to,
         subject,
         text
@@ -44,6 +53,4 @@ const email = (to, subject, text) => {
     })
 }
 
-module.exports = {
-    validate, email
-}
+module.exports = ({validate, email})

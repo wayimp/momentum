@@ -86,6 +86,7 @@ const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
   });
 
   const onSubmit = async (data: ContactFormValues) => {
+
     setFormData(data);
 
     await axiosClient
@@ -94,23 +95,25 @@ const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
         if (response && response.status === 200) {
           toast({
             title: 'Message sent.',
-            description: JSON.stringify(response.data),
+            description: "Your message was sent successfully",
             status: 'success',
             duration: 9000,
             isClosable: true,
           })
+
         }
       })
       .catch(function () {
         toast({
           title: 'Message sending error.',
-          description: JSON.stringify(),
+          description: 'There was a problem sending your message',
           status: 'error',
           duration: 9000,
           isClosable: true,
         })
       })
 
+    setFormData({ fullName: '', email: '', companyName: '', message: '', phone: '', accept: false })
   };
 
   const inputBG = useColorModeValue("gray.50", "gray.800");
