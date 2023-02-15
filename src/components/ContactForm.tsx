@@ -4,6 +4,8 @@ import { memo, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import axiosClient from '../util/axiosClient'
+import { useToast } from '@chakra-ui/react'
 
 import {
   Box,
@@ -35,11 +37,6 @@ interface ContactFormValues {
 const phoneRegExp =
   /^$|((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
-// string()
-//   .nullable()
-//   .transform((o, c) => (o === "" ? null : c))
-//   .min(10, "This value must be minimum of 10 characters.");
-
 const schema = yup
   .object({
     fullName: yup
@@ -65,7 +62,7 @@ const schema = yup
       .matches(phoneRegExp, "Phone number is not valid")
       .transform((_, val) => (val === val ? val : null)),
     message: yup.string().required("Message is a required field"),
-})
+  })
   .required();
 
 const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
@@ -76,6 +73,7 @@ const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
     setFormData,
   ] = useState<ContactFormValues>();
 
+  const toast = useToast()
   const inactiveColor = useColorModeValue("gray.500", "gray.400");
 
   const {
@@ -87,14 +85,32 @@ const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(data);
-        setFormData(data);
-        alert(JSON.stringify(data, null, 2));
-      }, 4000);
-    });
+  const onSubmit = async (data: ContactFormValues) => {
+    setFormData(data);
+
+    await axiosClient
+      .post('/contact', data)
+      .then(response => {
+        if (response && response.status === 200) {
+          toast({
+            title: 'Message sent.',
+            description: JSON.stringify(response.data),
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      })
+      .catch(function () {
+        toast({
+          title: 'Message sending error.',
+          description: JSON.stringify(),
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      })
+
   };
 
   const inputBG = useColorModeValue("gray.50", "gray.800");
@@ -173,7 +189,7 @@ const ContactForm: React.FC<ChakraProps & ThemingProps> = ({
                   </FormLabel>
                   <Input
                     id="phone"
-                   bg={inputBG}
+                    bg={inputBG}
                     // color="gray.500"
                     size="lg"
                     focusBorderColor={`${colorScheme}.400`}

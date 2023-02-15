@@ -97,7 +97,7 @@ export default function WithBackgroundImage() {
               Show me more
             </Button>
             <Parallax max={500} pos="absolute" left={0} top="10%" zIndex={2}>
-              <Heading color="whiteAlpha.700" fontSize="clamp(16px, 12vw, 10rem)">&nbsp;Big</Heading>
+              <Heading color="whiteAlpha.700" fontSize="clamp(16px, 12vw, 10rem)">&nbsp;Mighty</Heading>
             </Parallax>
             <Parallax max={500} pos="absolute" top="10%" right={0} zIndex={2}>
               <Heading color="whiteAlpha.700" fontSize="clamp(16px, 12vw, 10rem)">Tiny&nbsp;</Heading>
